@@ -1,0 +1,131 @@
+---
+import { Code2, Database , Rocket, Server , Heart, Github, Palette, Terminal  } from "@lucide/astro";
+
+interface Skill {
+  name: string;
+  level: number; // 1-5
+  icon: 'code' | 'database' | 'palette' | 'server' | 'terminal' | 'github';
+}
+
+const iconMap = {
+  code: Code2,
+  database: Database,
+  palette: Palette,
+  server: Server,
+  terminal: Terminal,
+  github: Github,
+};
+
+const { skills } = Astro.props as { skills: Skill[] };
+---
+
+<div class="skills">
+  {skills.map((skill, index) => {
+    const Icon = iconMap[skill.icon];
+
+    return (
+      <div
+        class="skill-card"
+        style={`animation-delay:${index * 0.1}s`}
+      >
+        <div class="skill-header">
+          <div class="icon">
+            {Icon && <Icon size={24} />}
+          </div>
+
+          <span class="skill-name">{skill.name}</span>
+        </div>
+
+        <div class="levels">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div
+              class={`level ${i < skill.level ? 'active' : ''}`}
+              style={`animation-delay:${index * 0.1 + i * 0.05}s`}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  })}
+</div>
+
+<style>
+.skills {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.skill-card {
+  background: linear-gradient(to bottom right, #1a1f3a, #0a0e27);
+  padding: 1rem;
+  border: 2px solid #4ecdc4;
+  border-radius: 4px;
+  box-shadow: 0 0 20px rgba(78,205,196,0.2);
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: fadeIn 0.4s forwards ease;
+}
+
+.skill-card:hover {
+  box-shadow: 0 0 30px rgba(78,205,196,0.5);
+}
+
+.skill-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #4ecdc4;
+  color: #0a0e27;
+  border-radius: 4px;
+}
+
+.skill-name {
+  color: #4ecdc4;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.levels {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.level {
+  width: 32px;
+  height: 32px;
+  border: 2px solid #4ecdc4;
+  background: #0a0e27;
+  border-radius: 4px;
+  transform: scale(0);
+  animation: pop 0.3s forwards ease;
+}
+
+.level.active {
+  background: #fdc830;
+  border-color: #fdc830;
+  box-shadow: 0 0 10px rgba(253,200,48,0.6);
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pop {
+  to {
+    transform: scale(1);
+  }
+}
+</style>

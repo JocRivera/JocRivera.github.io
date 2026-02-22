@@ -1,0 +1,126 @@
+---
+interface ProjectCardProps {
+  title: string;
+  description: string;
+  tags: string[];
+  link: string;
+  index: number;
+}
+
+const { title, description, tags, link, index } =
+  Astro.props as ProjectCardProps;
+---
+
+<a
+  href={link}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="project-card"
+  style={`animation-delay:${index * 0.1}s`}
+>
+  <div class="card-header">
+    <h3 class="card-title">{title}</h3>
+
+    <!-- Icono ExternalLink -->
+    <svg
+      class="external-icon"
+      viewBox="0 0 24 24"
+      width="20"
+      height="20"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M7 17L17 7" />
+      <path d="M7 7h10v10" />
+    </svg>
+  </div>
+
+  <p class="card-description">
+    {description}
+  </p>
+
+  <div class="tags">
+    {tags.map((tag) => (
+      <span class="tag">{tag}</span>
+    ))}
+  </div>
+</a>
+
+<style>
+.project-card {
+  display: block;
+  background: linear-gradient(to bottom right, #1a1f3a, #0a0e27);
+  padding: 1.5rem;
+  border: 2px solid #4ecdc4;
+  border-radius: 4px;
+  box-shadow: 0 0 20px rgba(78,205,196,0.3);
+  transition: all 0.3s ease;
+  text-decoration: none;
+
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.4s forwards ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 0 40px rgba(78,205,196,0.6);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  color: #4ecdc4;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  transition: color 0.3s ease;
+}
+
+.project-card:hover .card-title {
+  color: #fdc830;
+}
+
+.external-icon {
+  color: #ff6b35;
+  transition: color 0.3s ease;
+}
+
+.project-card:hover .external-icon {
+  color: #fdc830;
+}
+
+.card-description {
+  color: #a8b2d1;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  padding: 0.3rem 0.75rem;
+  background: #0a0e27;
+  border: 1px solid #4ecdc4;
+  color: #4ecdc4;
+  font-size: 0.75rem;
+  font-family: monospace;
+  border-radius: 4px;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>

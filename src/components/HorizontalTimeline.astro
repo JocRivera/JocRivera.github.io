@@ -1,0 +1,178 @@
+---
+interface TimelineItem {
+  year: string;
+  title: string;
+  company: string;
+  description: string;
+}
+
+interface Props {
+  items: TimelineItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="timeline">
+  <!-- Línea horizontal -->
+  <div class="timeline-line"></div>
+
+  <div class="timeline-grid">
+    {items.map((item, index) => (
+      <div class="timeline-item" style={`--delay: ${index * 0.2}s`}>
+        
+        <!-- Punto -->
+        <div class="timeline-dot"></div>
+
+        <!-- Conector vertical -->
+        <div class="timeline-connector"></div>
+
+        <!-- Card -->
+        <div class="timeline-card">
+          <div class="timeline-year">
+            {item.year}
+          </div>
+
+          <h3 class="timeline-title">
+            {item.title}
+          </h3>
+
+          <div class="timeline-company">
+            {item.company}
+          </div>
+
+          <p class="timeline-description">
+            {item.description}
+          </p>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+.timeline {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Línea horizontal */
+.timeline-line {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1280px;
+  height: 3px;
+  background: linear-gradient(to right, #ff6b35, #f7931e, #fdc830);
+}
+
+/* Grid responsive */
+.timeline-grid {
+  display: grid;
+  gap: 2rem;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .timeline-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .timeline-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Item */
+.timeline-item {
+  position: relative;
+  padding-top: 5rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.5s ease forwards;
+  animation-delay: var(--delay);
+}
+
+/* Punto */
+.timeline-dot {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  background: #ff6b35;
+  border: 4px solid #0a0e27;
+  box-shadow: 0 0 20px rgba(255,107,53,0.8);
+  border-radius: 4px;
+}
+
+/* Conector */
+.timeline-connector {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 48px;
+  background: linear-gradient(to bottom, #ff6b35, transparent);
+}
+
+/* Card */
+.timeline-card {
+  background: linear-gradient(to bottom right, #1a1f3a, #0a0e27);
+  padding: 1.5rem;
+  border: 2px solid #ff6b35;
+  box-shadow: 0 0 30px rgba(255,107,53,0.3);
+  transition: box-shadow 0.3s ease;
+  height: 100%;
+  border-radius: 4px;
+}
+
+.timeline-card:hover {
+  box-shadow: 0 0 40px rgba(255,107,53,0.6);
+}
+
+/* Text styles */
+.timeline-year {
+  color: #fdc830;
+  font-family: monospace;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+}
+
+.timeline-title {
+  color: #ff6b35;
+  font-weight: bold;
+  font-size: 0.875rem;
+  margin: 0 0 0.25rem 0;
+  letter-spacing: 1px;
+}
+
+.timeline-company {
+  color: #f7931e;
+  font-family: monospace;
+  font-size: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.timeline-description {
+  color: #a8b2d1;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Animación */
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>

@@ -1,0 +1,133 @@
+---
+import { Terminal } from "@lucide/astro"; // si usas lucide en astro
+import SocialLinks from "./SocialLinks.astro";
+
+const socialLinks = [
+  { name: "GitHub", url: "https://github.com/JocRivera", icon: "github" },
+  {
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/in/jocriverabedoya/",
+    icon: "linkedin",
+  },
+  { name: "Mail", url: "jriverab52@gmail.com", icon: "mail" },
+  {
+    name: "Instagram",
+    url: "https://www.instagram.com/joc_rivera666/",
+    icon: "instagram",
+  },
+];
+---
+
+<header class="header">
+  <div class="container">
+    <div class="top">
+      <div class="profile-container">
+        <img
+          src="/src/assets/image.png"
+          alt="Jose Rivera"
+          class="profile-img"
+        />
+      </div>
+
+      <div>
+        <h1 class="title">Jose Rivera</h1>
+
+        <p class="subtitle">&gt; Desarrollador Full Stack</p>
+      </div>
+    </div>
+
+    <SocialLinks links={socialLinks} />
+  </div>
+</header>
+
+<style>
+  /* Header entrada */
+  .header {
+    border-bottom: 2px solid #ff6b35;
+    background: linear-gradient(to right, #0a0e27, #1a1f3a);
+    box-shadow: 0 0 30px rgba(255, 107, 53, 0.3);
+    animation: slideDown 0.8s ease forwards;
+    opacity: 0;
+    width: 100%;
+  }
+  .container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 4rem;
+  }
+
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .icon {
+    width: 48px;
+    height: 48px;
+    color: #fdc830;
+  }
+
+  /* Título */
+  .title {
+    font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #ff6b35, #f7931e, #fdc830);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: 0.3s;
+    opacity: 0;
+  }
+
+  /* Subtítulo */
+  .subtitle {
+    color: #4ecdc4;
+    font-family: monospace;
+    margin-top: 0.5rem;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+  }
+
+  .profile-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .profile-img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 16px; /* o 50% si quieres circular */
+  }
+
+  /* Animaciones */
+  @keyframes slideDown {
+    from {
+      transform: translateY(-100px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+</style>

@@ -1,0 +1,84 @@
+---
+import { Github, Linkedin, Mail, Instagram } from "@lucide/astro";
+
+interface SocialLink {
+  name: string;
+  url: string;
+  icon: "github" | "linkedin" | "mail" | "instagram";
+}
+
+const { links } = Astro.props as { links: SocialLink[] };
+
+const iconMap = {
+  github: Github,
+  linkedin: Linkedin,
+  mail: Mail,
+  instagram: Instagram,
+};
+---
+
+<div class="social-container">
+  {links.map((link, index) => {
+    const Icon = iconMap[link.icon];
+    return (
+      <a
+        href={link.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="social-link"
+        style={`animation-delay:${index * 0.1}s`}
+        aria-label={link.name}
+      >
+        <Icon class="icon" />
+      </a>
+    );
+  })}
+</div>
+
+<style>
+.social-container {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Entrada escalonada */
+.social-link {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom right, #ff6b35, #f7931e);
+  border: 2px solid #fdc830;
+  border-radius: 4px;
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+  animation: popIn 0.4s ease forwards;
+  opacity: 0;
+  transform: scale(0);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover */
+.social-link:hover {
+  transform: scale(1.2) rotate(5deg);
+  box-shadow: 0 0 30px rgba(255, 107, 53, 0.8);
+}
+
+/* Click */
+.social-link:active {
+  transform: scale(0.9);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  color: #0a0e27;
+}
+
+@keyframes popIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+</style>
